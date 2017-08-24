@@ -1,0 +1,48 @@
+body {
+	font-family: sans-serif;
+	font-size: 1em;
+	background-color: #666;
+}
+h1 {
+	margin: 5px;
+	padding: 5px;
+}
+.section {
+	background-color: #fff;
+	margin: 5px;
+}
+.section > div {
+	padding: 5px;
+}
+.section-header {
+	background-color: #069;
+	font-size: 1.5em;
+}
+.section-body {
+}
+.section-footer {
+}
+.section input {
+	margin: 5px 0;
+	padding: 5px;
+}
+#div-state {
+	padding: 5px;
+	margin:5px;
+	background-color:#fff;
+	color:#000;
+	font-family: serif;
+}
+table {
+	color:#000;
+	border: 1px solid #444;
+}
+th {
+	background-color:#069;
+	font-weight: normal;
+	color: #fff;
+}
+
+select#form-selector {
+	vertical-align: middle;
+}
