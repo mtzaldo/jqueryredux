@@ -1,27 +1,22 @@
 'use strict';
 
-var simpleGrid = (function() {
+var SimpleGrid = (function() {
 
-	var template
-		= '<table id="simple-grid" cellspacing="1" cellpadding="5">'
-		+	'<thead>'
-		+		'<th>Maker</th>'
-		+		'<th>Model</th>'
-		+		'<th>options</th>'
-		+	'</thead>'
-		+ '</table>';
+	return function(props) {
 
-	var component = function(props) {
-
-		var $partial = app.helpers.$build(template, '#simple-grid');
-
-		var $content = simpleRow(props);
-
-		$partial.append($content);
-
-		return $partial;
+		return $('<table>', { id: 'simple-grid', cellspacing: 1, cellpadding: 5 }).append([
+				SimpleGridHeader(props),
+				SimpleGridBody( $.extend(true, {}, props, { columns : ['maker', 'model'] }) )
+			]);
 	};
+})();
 
-	return component;
-
+var SimpleGridHeader = (function() {
+	return function(props) {
+		return $('<thead>').append([
+					$('<th>', { text: 'Maker' }),
+					$('<th>', { text: 'Model' }),
+					$('<th>', { text: 'options' })
+				]);
+	}
 })();

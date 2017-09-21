@@ -46,3 +46,7 @@ th {
 select#form-selector {
 	vertical-align: middle;
 }
+
+input[type=text] {
+	margin-right: 5px;
+}

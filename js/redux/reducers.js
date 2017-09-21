@@ -7,7 +7,7 @@ var reducers = function (state, action) {
 		return { 
 			'background-color' : '#666',
 			'color' : '#fff',
-			'form' : 99
+			'form' : 0
 		};
 	}
 

@@ -11,7 +11,8 @@ var query = app.helpers.queryStringToJSON();
 if (query.form) store.dispatch(app.actions.setFormVisible(query.form));
 
 store.subscribe(function() {
-	mainContainer(store);
+	$container.empty();
+	$container.append( mainContainer(store) );
 });
 
 $(window).on('popstate', function(e) {

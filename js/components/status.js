@@ -1,18 +1,7 @@
 'use strict';
 
-var stateBar = (function() {
-
-	var template = '<div id="div-state"></div>';
-
-	var component = function(props) {
-
-		var $component = app.helpers.$build(template, '#div-state');
-
-		$component.text(JSON.stringify(props));
-
-		return $component;
+var StateBar = (function() {
+	return function(props) {
+		return $('<div>', { id: 'div-state', text: JSON.stringify(props) })
 	};
-
-	return component;
-
 })();

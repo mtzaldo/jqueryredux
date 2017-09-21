@@ -1,22 +1,18 @@
 'use strict';
 
-var carInformationContainer = (function () {
+var CarInformationContainer = (function () {
 
 	var container = function(store) {
 
 		var state = store.getState();
 
-		state = $.extend(
-					true,
-					{},
+		state = $.extend(true, {},
 					mapStateToProps(state),
 					mapDispatchToProps(store.dispatch)
 				);
 
-		var $car = carInfo(state);
-
-		return $car;
-	}
+		return CarInformation(state);
+	};
  		
 	var mapStateToProps = function(state) {
 		return { elements: state.cars || [] };

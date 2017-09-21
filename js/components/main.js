@@ -1,44 +1,64 @@
 'use strict';
 
-var main = (function () {
+var Main = (function () {
 
-	var template
-			='<div id="main">'
-			+	'<div class="section">'
-			+		'<div class="section-header">'
-			+			'View: '
-			+			'<select id="form-selector">'
-			+				'<option value="99">[None]</option>'
-			+				'<option value="0">All info</option>'
-			+				'<option value="1">Personal info</option>'
-			+				'<option value="2">Car info</option>'
-			+			'</select>'
-			+		'</div>'
-			+	'</div>'
-			+'</div>';
+	return function(props) {
 
-	var component = function(props) {
-
-		var $component = app.helpers.$build(template, '#main');
-
-		$component.css({
-			'background-color' : props['background-color'],
-			'color' : props.color 
-		});
-
-		$component.find('#form-selector')
-		.val(props.form)
-		.off('change')
-		.on('change', function(e) {
-			
-			var form = Number(e.target.value);
-
-			props.onFormSelectorChange(e, form);
-		});
-
-		return $component;
+		return $('<div>',  { 'id': 'main'}).css({'background-color': props['background-color'], 'color': props.color }).append([
+					Section({ id: 'header'}).append([
+						SectionHeader({text: 'View '}).append([
+							FormSelector({ onFormSelectorChange: props.onFormSelectorChange, form: props.form })
+						])
+					])
+				]);
 	};
-
-	return component;
 })();
 
+var FormSelector = (function() {
+
+	return function(props) {
+
+		var _formSelectorChange = function(e) {
+				var form = Number(e.target.value);
+				props.onFormSelectorChange(e, form);
+			};
+
+		return Select({ id: 'form-selector', onChange: _formSelectorChange}).append([
+					SelectOption({ value: 0, text: '[None]'}),
+					SelectOption({ value: 1, text: 'All info'}),
+					SelectOption({ value: 2, text: 'Personal info'}),
+					SelectOption({ value: 3, text: 'Car info'})
+				]).val(props.form);
+	};
+
+})();
+
+var Select = (function() {
+	return function(props) {
+		return $('<select>', { 'id': props.id, 'on': { 'change': props.onChange }});
+	};
+})();
+
+var SelectOption = (function() {
+	return function(props) {
+		return $('<option>', { 'value': props.value, 'text': props.text });
+	};
+})();
+
+var Section = (function() {
+	return function(props) {
+		return $('<div>', { id: props.id || '', 'class': 'section'});
+	};
+})();
+
+var SectionHeader = (function() {
+	return function(props) {
+		return $('<div>', { 'class': 'section-header', 'text': props.text });
+	};
+})();
+
+var SectionBody = (function() {
+	return function(props) {
+		return $('<div>', { 'class': 'section-body'});
+	};
+})();

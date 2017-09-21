@@ -1,45 +1,39 @@
 'use strict';
 
-var carInfo = (function() {
+var CarInformation = (function() {
 
-	var template
-			= '<div id="car-information" class="section">'
-			+		'<div class="section-header">Car Infomation</div>'
-			+		'<div class="section-body">'
-			+			'<input type="text" name="maker" placeholder="maker"> '
-			+			'<input type="text" name="model" placeholder="model"> '
-			+			'<button id="btn-save">Save</button>'
-			+		'</div>'
-			+		'<div class="section-footer"></div>'
-			+ '</div>';
+	var state = {}
 
-	var component = function(props) {
+	return function(props) {
 
-		var $partial = app.helpers.$build(template, '#car-information');
-
-		$partial
-		.find('button#btn-save')
-		.off('click')
-		.on('click', function(e) {
+		var _saveClick = function(e) {
 			e.preventDefault();
+
+			if (!(state.maker && state.model)) {
+				alert('Please provide a valid input');
+				return false;
+			}
 			
-			var $maker = $partial.find('input[name="maker"]');
-			var $model = $partial.find('input[name="model"]');
+			props.onAddCarInfoClick(e, state );
 
-			props.onAddCarInfoClick(e, { maker: $maker.val(), model: $model.val() });
+			state = {};
+		};
 
-			$maker.val('');
-			$model.val('');
+		var _onTextChange = function(e) {
+			state = $.extend(true, {}, state, { [e.target.name]: e.target.value });
+		};
 
-		});
-		var elements = props.elements.sort( function(a, b) { return a.maker > b.maker; } );
-		var $grid = simpleGrid({ elements: props.elements, removeRow: props.onRemoveCarInfoClick });
+		props.elements.sort( function(a, b) { return a.maker > b.maker; } );
 
-		$partial.find('.section-footer').append($grid);
-
-		return $partial;
+		return Section({ id: 'car-information'}).append([
+					SectionHeader({ text: 'Car Information'}),
+					SectionBody().append([
+						$('<input>', { type: 'text', 'name': 'maker', 'placeholder': 'maker', on: { 'change': _onTextChange }}),
+						$('<input>', { type: 'text', 'name': 'model', 'placeholder': 'model', on: { 'change': _onTextChange }}),
+						$('<button>', { id: 'btn-save', text: 'Save', on: { 'click': _saveClick }}),
+						SimpleGrid({ elements: props.elements, removeRow: props.onRemoveCarInfoClick })
+					]),
+					$('<div>', { 'class': 'section-footer'})
+			]);
 	};
-
-	return component;
-
 })()

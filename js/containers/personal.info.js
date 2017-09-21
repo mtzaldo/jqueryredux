@@ -1,6 +1,6 @@
 'use strict';
 
-var personalInformationContainer = (function () {
+var PersonalInformationContainer = (function () {
 
 	var container = function(store) {
 

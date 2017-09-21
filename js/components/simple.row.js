@@ -1,87 +1,54 @@
 'use strict';
 
-var simpleRow = (function() {
+var SimpleGridBody = (function() {
 
-	var template = '<tbody></tbody>';
+	return function(props) {
 
-	var component = function(props) {
+		var rows = props.elements.map(function(obj, i) {
+						return SimpleGridRow({id: 'row-' + i}).append(
+							props.columns.map(function(prop, index) {
+								return SimpleGridCol({ id: 'col-' + index, text: obj[prop] });
+							})
+							.concat([SimpleColumnOption({ el: obj, removeRow: props.removeRow })])
+						)
+					});
 
-		var $tbody = app.helpers.$build(template, '#simple-grid > tbody');
-
-		$tbody.empty();
-
-		var $row, $col, keys;
-
-		//this must be a separate component
-		if (!props.elements.length) $tbody.append('<tr><td colspan="3">No records</td></tr>');
-
-		for(var i=0; i < props.elements.length; i++) {
-
-			$row = $('<tr>').prop('id', 'row-' + i);
-
-			keys = Object.keys(props.elements[i]);
-
-			for (var j = 0; j < keys.length; j++) {
-
-				$col = $('<td>').attr('data-col', 'col-' + j);
-				
-				$col.text(props.elements[i][ keys[j] ]);
-
-				$row.append($col);
-			}
-
-			//this must be a separate component
-			$row.append(
-				simpleColumnOption(
-					{ 
-						el: $.extend({}, props.elements[i]), 
-						removeRow: props.removeRow 
-					}
-				)
-			);
-
-			$tbody.append($row);
-		}
-
-		return $tbody;
+		return $('<tbody>').append(
+			rows.length? rows : $('<tr><td colspan="3">No records</td></tr>')
+		);
 	};
-
-	return component;
-
 })();
 
-var simpleColumnOption = (function() {
+var SimpleGridRow = (function() {
+	return function(props) {
+		return $('<tr>', { id: props.id });
+	};
+})();
 
-	var template
-		= '<td>'
-		+	'<button class="delete">x</button>'
-		+	' '
-		+	'<button class="edit">e</button>'
-		+ '</td>'
-
-	var component = function(props) {
-
-		var $col = $(template);
-
-		$col.find('button.delete')
-		.off('click')
-		.on('click' , function(e) {
-
-			props.removeRow(e, props.el);
-
-		});
-
-		$col.find('button.edit')
-		.off('click')
-		.on('click', function(e) {
-			e.preventDefault();
-
-			alert('edit!');
-		});
-
-		return $col;
+var SimpleGridCol = (function() {
+	return function(props) {
+		return $('<td>', { id: props.id, text: props.text });
 	}
+})();
 
-	return component;
+var SimpleColumnOption = (function() {
 
+	return function(props) {
+
+		var _delete = function(e) {
+			e.preventDefault();
+			props.removeRow(e, props.el);
+		};
+
+		var _edit = function(e) {
+			e.preventDefault();
+			alert('edit!');
+		};
+
+		return $('<td>').append([
+					$('<button>', { 'class': 'delete', text: 'x', on: { 'click': _delete }}),
+					$('<span>', { html: '&nbsp;&nbsp;' }),
+					$('<button>', { 'class': 'edit', text: 'e', on: { 'click': _edit }})
+				]);
+	}
 })();
