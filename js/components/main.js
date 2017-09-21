@@ -62,3 +62,9 @@ var SectionBody = (function() {
 		return $('<div>', { 'class': 'section-body'});
 	};
 })();
+
+var SectionFooter = (function() {
+	return function(props) {
+		return $('<div>', { 'class': 'section-footer'});
+	}
+})();

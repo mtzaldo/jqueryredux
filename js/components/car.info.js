@@ -33,7 +33,7 @@ var CarInformation = (function() {
 						$('<button>', { id: 'btn-save', text: 'Save', on: { 'click': _saveClick }}),
 						SimpleGrid({ elements: props.elements, removeRow: props.onRemoveCarInfoClick })
 					]),
-					$('<div>', { 'class': 'section-footer'})
+					SectionFooter()
 			]);
 	};
 })()
