@@ -2,6 +2,10 @@
 
 var StateBar = (function() {
 	return function(props) {
-		return $('<div>', { id: 'div-state', text: JSON.stringify(props) })
+		return Section({id: 'status-bar'}).append([
+			SectionBody().append([
+				$('<div>', { id: 'div-state', text: JSON.stringify(props) })
+			])
+		]);
 	};
 })();

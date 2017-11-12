@@ -2,14 +2,31 @@
 
 var mainContainer = (function () {
 
+	var children = {
+		1: function(store) { 
+			var p = PersonalInformationContainer(store); 
+			var c = CarInformationContainer(store);
+			var s = Submit(store);
+			var b = StateBar(store.getState());
+
+			return [p, c, s, b];
+		},
+		2: function(store) {
+			var p = PersonalInformationContainer(store);
+			var b = StateBar(store.getState());
+
+			return [p, b];
+		},
+		3: function(store) {
+			var c = CarInformationContainer(store);
+			var b = StateBar(store.getState());
+
+			return [c, b];
+		}
+	};
+
 	var container = function(store) {
 		var state = store.getState();
-
-		var children = {
-			1: [ PersonalInformationContainer(store), CarInformationContainer(store), StateBar(state) ],
-			2: [ PersonalInformationContainer(store), StateBar(state)],
-			3: [ CarInformationContainer(store), StateBar(state)]
-		};
 		
 		state = $.extend(true, {},
 					mapStateToProps(state),
@@ -17,7 +34,8 @@ var mainContainer = (function () {
 				);
 
 		return Main(state).append(
-				children[state.form] || StateBar(state)
+				children[state.form] && children[state.form](store) 
+				|| StateBar(state)
 			);
 	};
 	

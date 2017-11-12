@@ -9,9 +9,12 @@ h1 {
 }
 .section {
 	background-color: #fff;
-	margin: 5px;
+	/*margin: 5px;
+	max-width: 1000px;
+	margin: auto;*/
+	margin-top: 5px;
 }
-.section > div {
+.section div {
 	padding: 5px;
 }
 .section-header {
@@ -27,8 +30,7 @@ h1 {
 	padding: 5px;
 }
 #div-state {
-	padding: 5px;
-	margin:5px;
+
 	background-color:#fff;
 	color:#000;
 	font-family: serif;
@@ -46,7 +48,30 @@ th {
 select#form-selector {
 	vertical-align: middle;
 }
+button {
+	margin-right: 5px;
+}
 
 input[type=text] {
 	margin-right: 5px;
+	border: 1px solid #aaa;
+	width: 150px;
+}
+
+.loader {
+	font-size: 10px;
+	background-color: #069;
+	color: #fff;
+	margin-left: 10px;
+	padding: 5px;
+	display: none;
+}
+
+.spacer {
+	width: 205px;
+	display: inline-block;
+}
+
+.highlight {
+	border-color : #f00 !important;
 }

@@ -35,7 +35,7 @@ var FormSelector = (function() {
 
 var Select = (function() {
 	return function(props) {
-		return $('<select>', { 'id': props.id, 'on': { 'change': props.onChange }});
+		return $('<select>', { 'id': props.id, 'class': 'selector-border', 'on': { 'change': props.onChange }});
 	};
 })();
 
@@ -66,5 +66,11 @@ var SectionBody = (function() {
 var SectionFooter = (function() {
 	return function(props) {
 		return $('<div>', { 'class': 'section-footer'});
+	}
+})();
+
+var Loader = (function() {
+	return function(props) {
+		return $('<i>', { 'class': 'loader', text: props.text || 'loading...' });
 	}
 })();

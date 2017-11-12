@@ -6,7 +6,7 @@ var CarInformation = (function() {
 
 	return function(props) {
 
-		var _saveClick = function(e) {
+		var _addClick = function(e) {
 			e.preventDefault();
 
 			if (!(state.maker && state.model)) {
@@ -30,7 +30,7 @@ var CarInformation = (function() {
 					SectionBody().append([
 						$('<input>', { type: 'text', 'name': 'maker', 'placeholder': 'maker', on: { 'change': _onTextChange }}),
 						$('<input>', { type: 'text', 'name': 'model', 'placeholder': 'model', on: { 'change': _onTextChange }}),
-						$('<button>', { id: 'btn-save', text: 'Save', on: { 'click': _saveClick }}),
+						$('<button>', { id: 'btn-add', text: 'Add', on: { 'click': _addClick }}),
 						SimpleGrid({ elements: props.elements, removeRow: props.onRemoveCarInfoClick })
 					]),
 					SectionFooter()

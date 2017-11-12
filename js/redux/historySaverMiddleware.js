@@ -1,4 +1,5 @@
-var historySaver = function(store) {
+var historySaver = 
+function(store) {
 	return function (next) {
 		return function(action) {
 			
